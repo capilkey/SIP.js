@@ -1647,6 +1647,9 @@ InviteClientContext.prototype = {
           if (self.isCanceled || self.status === C.STATUS_TERMINATED) {
             return;
           }
+
+          offer = SIP.Hacks.Firefox.hackCLinInIP(offer);
+
           self.hasOffer = true;
           self.request.body = offer;
           self.status = C.STATUS_INVITE_SENT;
