@@ -864,6 +864,7 @@ UA.prototype.loadConfig = function(configuration) {
       userAgentString: SIP.C.USER_AGENT,
 
       // Session parameters
+	  iceCheckingTimeout: 5000,
       noAnswerTimeout: 60,
       stunServers: ['stun:stun.l.google.com:19302'],
       turnServers: [],
@@ -1087,6 +1088,7 @@ UA.configuration_skeleton = (function() {
       "hackViaTcp", // false.
       "hackIpInContact", //false
       "hackWssInTransport", //false
+	  "iceCheckingTimeout",
       "instanceId",
       "noAnswerTimeout", // 30 seconds.
       "password",
@@ -1259,6 +1261,12 @@ UA.configuration_check = {
     hackIpInContact: function(hackIpInContact) {
       if (typeof hackIpInContact === 'boolean') {
         return hackIpInContact;
+      }
+    },
+
+    iceCheckingTimeout: function(iceCheckingTimeout) {
+      if(SIP.Utils.isDecimal(iceCheckingTimeout)) {
+        return Math.max(500, iceCheckingTimeout);
       }
     },
 
